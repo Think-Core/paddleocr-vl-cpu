@@ -50,7 +50,7 @@ Break the GPU barrier! This project enables you to run PaddleOCR-VL (PaddlePaddl
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/paddleocr-vl-cpu.git
+git clone https://github.com/Think-Core/paddleocr-vl-cpu.git
 cd paddleocr-vl-cpu
 
 # One-click setup (downloads model automatically ~2GB)
@@ -262,8 +262,8 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 📧 Support
 
-- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/yourusername/paddleocr-vl-cpu/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/paddleocr-vl-cpu/discussions)
+- 🐛 **Bug Reports**: [GitHub Issues](https://github.com/Think-Core/paddleocr-vl-cpu/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/Think-Core/paddleocr-vl-cpu/discussions)
 - ⭐ **Star this project** if you find it helpful!
 
 ---
@@ -308,7 +308,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ```bash
 # 克隆仓库
-git clone https://github.com/yourusername/paddleocr-vl-cpu.git
+git clone https://github.com/Think-Core/paddleocr-vl-cpu.git
 cd paddleocr-vl-cpu
 
 # 一键安装（自动下载模型 约2GB）
@@ -520,8 +520,8 @@ MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
 ## 📧 支持
 
-- 🐛 **错误报告**：[GitHub Issues](https://github.com/yourusername/paddleocr-vl-cpu/issues)
-- 💬 **问题讨论**：[GitHub Discussions](https://github.com/yourusername/paddleocr-vl-cpu/discussions)
+- 🐛 **错误报告**：[GitHub Issues](https://github.com/Think-Core/paddleocr-vl-cpu/issues)
+- 💬 **问题讨论**：[GitHub Discussions](https://github.com/Think-Core/paddleocr-vl-cpu/discussions)
 - ⭐ **觉得有用请点星！**
 
 ---
@@ -532,6 +532,6 @@ MIT 许可证 - 详见 [LICENSE](LICENSE) 文件。
 
 **用 ❤️ 为 OCR 社区打造**
 
-[⭐ Star](https://github.com/yourusername/paddleocr-vl-cpu) · [🐛 Report Bug](https://github.com/yourusername/paddleocr-vl-cpu/issues) · [💡 Request Feature](https://github.com/yourusername/paddleocr-vl-cpu/issues)
+[⭐ Star](https://github.com/Think-Core/paddleocr-vl-cpu) · [🐛 Report Bug](https://github.com/Think-Core/paddleocr-vl-cpu/issues) · [💡 Request Feature](https://github.com/Think-Core/paddleocr-vl-cpu/issues)
 
 </div>
