@@ -1,11 +1,7 @@
-# PaddleOCR-VL CPU API Server
+
 
 <div align="center">
-
-[[Python](https://img.shields.io/badge/Python-3.12.3-blue.svg)](https://www.python.org/)
-[[FastAPI](https://img.shields.io/badge/FastAPI-0.120.0-green.svg)](https://fastapi.tiangolo.com/)
-[[License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[[Model](https://img.shields.io/badge/Model-PaddleOCR--VL--0.9B-orange.svg)](https://www.modelscope.cn/PaddlePaddle/PaddleOCR-VL)
+<h1><b>PaddleOCR-VL CPU API Server</b></h1>
 
 **🎯 Run PaddleOCR-VL on CPU with OpenAI-compatible API**
 
@@ -28,7 +24,6 @@ Break the GPU barrier! This project enables you to run PaddleOCR-VL (PaddlePaddl
 | **CPU Support** | ❌ GPU Required | ✅ Full CPU Support |
 | **API Format** | Custom | OpenAI-compatible |
 | **Framework** | PaddlePaddle | Pure PyTorch |
-| **Streaming** | ❌ | ✅ Real-time streaming |
 | **Deployment** | Manual setup | One-line script |
 | **Service Management** | Manual | tmux automation |
 
