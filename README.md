@@ -159,7 +159,7 @@ curl -X POST http://localhost:7777/v1/chat/completions \
         {"type": "text", "text": "Read this document"},
         {
           "type": "image_url",
-          "image_url": {"url": "data:image/jpeg;base64,/9j/4AAQ..."}
+          "image_url": {"url": "data:image/jpeg;base64,{image_b64}"}
         }
       ]
     }]
@@ -417,7 +417,7 @@ curl -X POST http://localhost:7777/v1/chat/completions \
         {"type": "text", "text": "识别文字"},
         {
           "type": "image_url",
-          "image_url": {"url": "data:image/jpeg;base64,/9j/4AAQ..."}
+          "image_url": {"url": "data:image/jpeg;base64,{image_b64}"}
         }
       ]
     }]
