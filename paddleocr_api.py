@@ -5,13 +5,14 @@ import torch
 from PIL import Image
 from transformers import AutoProcessor, AutoModelForCausalLM
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import StreamingResponse
+from fastapi.responses import StreamingResponse, Response
 import uvicorn
 import requests
 import time
 import json
 import gc
 import traceback
+from formatters import get_formatter
 
 LOCAL_PATH = "/root/paddleocr-vl/models/PaddleOCR-VL"  # 修改为实际路径
 
@@ -94,6 +95,9 @@ async def chat_completions(body: dict):
         raise HTTPException(status_code=400, detail=f"请求格式错误: {e}")
 
     images = []
+    image_width = None
+    image_height = None
+
     for idx, url in enumerate(image_urls):
         img = None
         try:
@@ -104,7 +108,7 @@ async def chat_completions(body: dict):
                     b64_data = url.replace("data:image/", "").split(";")[0]
                 else:
                     b64_data = url.replace("data:", "")
-                
+
                 img_bytes = base64.b64decode(b64_data)
                 img = Image.open(BytesIO(img_bytes))
             else:
@@ -123,6 +127,9 @@ async def chat_completions(body: dict):
         if img:
             if img.mode != 'RGB':
                 img = img.convert('RGB')
+            # Store dimensions of first image for formatters
+            if idx == 0:
+                image_width, image_height = img.size
             images.append(img)
 
     image = images[0] if images else None
@@ -209,15 +216,53 @@ async def chat_completions(body: dict):
         generated = full_output.replace(prompt, "").strip()
 
     stream = body.get("stream", False)
+    response_format = body.get("response_format", None)
     completion_id = f"chatcmpl-{int(time.time())}"
     created_time = int(time.time())
-    
+
+    # Apply formatter if specified
+    formatted_content = generated
+    content_type = "application/json"
+
+    if response_format:
+        format_type = None
+        if isinstance(response_format, dict):
+            format_type = response_format.get("type", "").lower()
+        elif isinstance(response_format, str):
+            format_type = response_format.lower()
+
+        if format_type == "hocr":
+            try:
+                formatter = get_formatter("hocr")
+                formatted_content = formatter.format(
+                    generated,
+                    image_width=image_width,
+                    image_height=image_height
+                )
+                content_type = formatter.get_content_type()
+            except Exception as e:
+                print(f"格式化失败: {e}")
+                traceback.print_exc()
+                # Fall back to plain text on error
+                formatted_content = generated
+
     # 清理图片内存
     if image:
         del image
     if images:
         del images
-    
+
+    # For HOCR format, return HTML directly without JSON wrapping
+    if response_format and isinstance(response_format, (dict, str)):
+        format_type = None
+        if isinstance(response_format, dict):
+            format_type = response_format.get("type", "").lower()
+        elif isinstance(response_format, str):
+            format_type = response_format.lower()
+
+        if format_type == "hocr" and not stream:
+            return Response(content=formatted_content, media_type=content_type)
+
     if stream:
         async def generate_stream():
             words = generated.split()
