@@ -35,6 +35,7 @@ Break the GPU barrier! This project enables you to run PaddleOCR-VL (PaddlePaddl
 - ⚡ **Streaming Support** - Real-time response streaming
 - 💾 **Auto Memory Cleanup** - Prevents memory leaks for long-running services
 - 🖼️ **Multiple Formats** - Supports JPEG, PNG, BMP, Base64, and URLs
+- 📄 **HOCR Output** - Export OCR results in HOCR (HTML-based OCR) format
 
 ---
 
@@ -166,6 +167,44 @@ curl -X POST http://localhost:7777/v1/chat/completions \
   }'
 ```
 
+### HOCR Format Output
+
+HOCR (HTML-based OCR) is an open standard for representing OCR results with layout structure and coordinates.
+
+```python
+import requests
+import base64
+
+with open("document.jpg", "rb") as f:
+    image_b64 = base64.b64encode(f.read()).decode()
+
+response = requests.post(
+    "http://localhost:7777/v1/chat/completions",
+    json={
+        "model": "paddleocr-vl",
+        "messages": [{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "Extract all text"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_b64}"
+                    }
+                }
+            ]
+        }],
+        "response_format": "hocr"  # Request HOCR format
+    }
+)
+
+# Save as HTML file
+with open("output.html", "w", encoding="utf-8") as f:
+    f.write(response.text)
+```
+
+For detailed HOCR usage examples, see [HOCR_USAGE.md](HOCR_USAGE.md).
+
 ---
 
 ## 🎯 Use Cases
@@ -238,7 +277,12 @@ paddleocr-vl-cpu/
 ├── quick_init_setup.sh        # Setup script
 ├── quick_start.sh             # Service management
 ├── python_version.txt         # Python version lock
-└── models/                    # Model files (gitignored)
+├── HOCR_USAGE.md             # HOCR format usage guide
+├── formatters/               # Output formatters
+│   ├── __init__.py          # Formatter registry
+│   ├── base.py              # Base formatter class
+│   └── hocr.py              # HOCR formatter
+└── models/                   # Model files (gitignored)
 ```
 
 ---
@@ -293,6 +337,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - ⚡ **流式支持** - 实时流式响应
 - 💾 **自动清理** - 防止长时间运行的内存泄漏
 - 🖼️ **多格式支持** - 支持 JPEG、PNG、BMP、Base64、URL
+- 📄 **HOCR 输出** - 支持导出 HOCR（HTML-based OCR）格式
 
 ---
 
@@ -424,6 +469,44 @@ curl -X POST http://localhost:7777/v1/chat/completions \
   }'
 ```
 
+### HOCR 格式输出
+
+HOCR（HTML-based OCR）是一种开放标准，用于表示包含布局结构和坐标信息的 OCR 结果。
+
+```python
+import requests
+import base64
+
+with open("document.jpg", "rb") as f:
+    image_b64 = base64.b64encode(f.read()).decode()
+
+response = requests.post(
+    "http://localhost:7777/v1/chat/completions",
+    json={
+        "model": "paddleocr-vl",
+        "messages": [{
+            "role": "user",
+            "content": [
+                {"type": "text", "text": "识别所有文字"},
+                {
+                    "type": "image_url",
+                    "image_url": {
+                        "url": f"data:image/jpeg;base64,{image_b64}"
+                    }
+                }
+            ]
+        }],
+        "response_format": "hocr"  # 请求 HOCR 格式
+    }
+)
+
+# 保存为 HTML 文件
+with open("output.html", "w", encoding="utf-8") as f:
+    f.write(response.text)
+```
+
+详细的 HOCR 使用示例请参考 [HOCR_USAGE.md](HOCR_USAGE.md)。
+
 ---
 
 ## 🎯 应用场景
@@ -496,7 +579,12 @@ paddleocr-vl-cpu/
 ├── quick_init_setup.sh        # 安装脚本
 ├── quick_start.sh             # 服务管理脚本
 ├── python_version.txt         # Python 版本锁定
-└── models/                    # 模型文件（已忽略）
+├── HOCR_USAGE.md             # HOCR 格式使用指南
+├── formatters/               # 输出格式化器
+│   ├── __init__.py          # 格式化器注册表
+│   ├── base.py              # 基础格式化器类
+│   └── hocr.py              # HOCR 格式化器
+└── models/                   # 模型文件（已忽略）
 ```
 
 ---
